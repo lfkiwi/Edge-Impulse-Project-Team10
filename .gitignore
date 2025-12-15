@@ -7,8 +7,11 @@ __pycache__/
 # 虛擬環境 
 venv/
 env/
+__pycache__/
+
 # 測試圖片(可選) 
 test_images/*.jpg
+
 # 系統檔案 
 .DS_Store
 Thumbs.db
