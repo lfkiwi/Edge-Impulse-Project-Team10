@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$API_KEY" ] || [ -z "$PROJECT_ID" ]; then
+  echo "[WARN] API_KEY or PROJECT_ID not set, skip API test"
+  exit 0
+fi
+
 API_KEY="${EI_API_KEY}"
 PROJECT_ID="${EI_PROJECT_ID}"
 
