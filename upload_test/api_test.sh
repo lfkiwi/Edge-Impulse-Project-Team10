@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-API_KEY= "${EI_API_KEY}"
-PROJECT_ID= "${EI_PROJECT_ID}"
+API_KEY="${EI_API_KEY}"
+PROJECT_ID="${EI_PROJECT_ID}"
 
 BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
