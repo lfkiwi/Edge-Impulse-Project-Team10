@@ -19,3 +19,4 @@ jobs:
         run: |
           cd upload_test
           bash api_test.sh
+          bash api_edge_test.sh
