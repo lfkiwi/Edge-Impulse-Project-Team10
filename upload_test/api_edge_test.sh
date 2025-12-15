@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_ID= #"YOUR_PROJECT_ID"
+PROJECT_ID= "${EI_API_KEY}"
 BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
 echo "[TEST] Invalid API key"
