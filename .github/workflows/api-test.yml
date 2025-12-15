@@ -14,8 +14,8 @@ jobs:
 
       - name: Run API Test
         env:
-          API_KEY: ${{ secrets.EI_API_KEY }}
-          PROJECT_ID: ${{ secrets.EI_PROJECT_ID }}
+          EI_API_KEY: ${{ secrets.EI_API_KEY }}
+          EI_PROJECT_ID: ${{ secrets.EI_PROJECT_ID }}
         run: |
           cd upload_test
           bash api_test.sh
