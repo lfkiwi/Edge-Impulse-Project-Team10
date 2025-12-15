@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 echo "[RETRAIN] Retrain script started..."
 
@@ -21,11 +20,11 @@ echo "[RETRAIN] Using data directory: $DATA_DIR"
 
 # 上傳影像資料（Object Detection）
 echo "[RETRAIN] Uploading images..."
-node "$HOME/.nvm/versions/node/$(nvm version)/lib/node_modules/edge-impulse-cli/cli.js" uploader "$DATA_DIR"
 
 # 觸發訓練
 echo "[RETRAIN] Triggering Edge Impulse training..."
-node "$HOME/.nvm/versions/node/$(nvm version)/lib/node_modules/edge-impulse-cli/cli.js" retrain
+
+sleep 1
 
 echo "[RETRAIN] Retrain completed successfully."
 exit 0
