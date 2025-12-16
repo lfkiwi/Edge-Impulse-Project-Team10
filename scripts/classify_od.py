@@ -4,9 +4,12 @@ import cv2
 import numpy as np
 from pathlib import Path
 from edge_impulse_linux.runner import ImpulseRunner
+import os
+
+#log 共用函式
+from logger import info, warn, error
 
 CONF_THRESHOLD = 0.5
-RESULT_DIR = Path("results")
 
 # 等比例縮放 + padding 函式
 def letterbox(image, target_w, target_h):
@@ -31,7 +34,10 @@ def letterbox(image, target_w, target_h):
     return padded, scale, pad_x, pad_y
 
 # 批次推論(直接傳一整個資料夾)
-def run_inference(runner, model_params, image_path: Path):
+def run_inference(runner, model_params, image_path: Path, output_path: Path):
+    #確認資料夾存在
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
     # 取得模型標籤輸入尺寸
     width = model_params["image_input_width"]
     height = model_params["image_input_height"]
@@ -40,9 +46,18 @@ def run_inference(runner, model_params, image_path: Path):
     expected_pixels = width * height
     channels = input_features // expected_pixels
 
+    #圖片讀取前紀錄
+    info("classify_od.py", "read_image", f"讀取圖片：{image_path}")
+
     # 讀取並處理圖片
     img = cv2.imread(str(image_path))
+    if img is None:
+        error("classify_od.py", "read_image", f"無法讀取圖片: {image_path}")
+        raise RuntimeError(f"讀取圖片失敗，路徑: {image_path}")
     orig = img.copy()
+
+    #開始前處理
+    info("classify_od.py", "preprocess", "開始圖片前處理（轉灰階、resize、flatten）")
 
     if channels == 1:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -85,50 +100,57 @@ def run_inference(runner, model_params, image_path: Path):
                 cv2.FONT_HERSHEY_SIMPLEX, font_scale,
                 (0, 0, 255), thickness
             )
+    else:
+        warn("classify_od.py", "draw_boxes", "result['bounding_boxes'] 為空，沒有框可以畫")
 
-    # 輸出圖片到資料夾
-    RESULT_DIR.mkdir(exist_ok=True)
-    out_path = RESULT_DIR / f"{image_path.stem}_result.jpg"
-    cv2.imwrite(str(out_path), orig)
-
+    # 輸出圖片
+    cv2.imwrite(str(output_path), orig)
+    print(f"圖片 {image_path.name} 已儲存至 {output_path}")
     print(f"{image_path.name}: 偵測到人數 = {count}")
     return count
 
 
 def main():
-    if len(sys.argv) != 3:
-        print("使用方式: python3 classify_od.py <model.eim> <圖片>")
+    #記錄流程啟動
+    info("classify_od.py", "start", "開始執行推論流程")
+
+    if len(sys.argv) != 4:
+        #log錯誤參數
+        error("classify_od.py", "args", "參數錯誤：需要 <model.eim> <image> <output>")
+
+        print("使用方式: python3 classify_od.py <model.eim> <輸入圖片> <輸出圖片>")
         sys.exit(1)
 
     model_path = sys.argv[1]
-    input_path = Path(sys.argv[2])
+    input_image = Path(sys.argv[2])
+    output_image = Path(sys.argv[3])
+
+    #把參數記錄進 log
+    info("classify_od.py", "args", f"模型={model_path}, 圖片={input_image}, 輸出={output_image}")
 
     print(f"載入模型: {model_path}")
-    print(f"載入圖片: {input_path}")
+    print(f"載入圖片: {input_image}")
+
+    #記錄開始初始化模型
+    info("classify_od.py", "load_model", "建立 ImpulseRunner，準備初始化模型" ) 
 
     # 初始化推論引擎
     runner = ImpulseRunner(model_path)
     try:
         model_info = runner.init()
+        #記錄模型初始化成功
+        info("classify_od.py", "load_model", "模型初始化成功")
         params = model_info["model_parameters"]
 
-        if input_path.is_file():
-            run_inference(runner, params, input_path)
-        elif input_path.is_dir():
-            images = sorted(
-                p for p in input_path.iterdir()
-                if p.suffix.lower() in [".jpg", ".png", ".jpeg"]
-            )
-            if not images:
-                print("資料夾內沒有圖片")
-                return
-            total = 0
-            for img_path in images:
-                total += run_inference(runner, params, img_path)
-            print(f"\n總偵測人數: {total}")
+        count = run_inference(
+            runner,
+            params,
+            input_image,
+            output_image
+        )
 
-        else:
-            print("輸入不是有效的檔案或資料夾")
+        print(f"偵測圖片數量={count}")
+        print(f"DETECTED={count}")
 
     finally:
         runner.stop()
