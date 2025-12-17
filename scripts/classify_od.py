@@ -33,7 +33,7 @@ def letterbox(image, target_w, target_h):
 
     return padded, scale, pad_x, pad_y
 
-# 批次推論(直接傳一整個資料夾)
+# 單張推論
 def run_inference(runner, model_params, image_path: Path, output_path: Path):
     #確認資料夾存在
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -69,8 +69,22 @@ def run_inference(runner, model_params, image_path: Path, output_path: Path):
     img_padded, scale, pad_x, pad_y = letterbox(img, width, height)
     # flatten
     img_input = img_padded.astype(np.float32).flatten()
+
+    if img_input.shape[0] != input_features:
+        raise RuntimeError(
+            f"Input feature mismatch: {img_input.shape[0]} != {input_features}"
+        )
+
     # 執行推論
-    result = runner.classify(img_input)
+    try:
+        result = runner.classify(img_input)
+    except TimeoutError:
+        error(
+            "classify_od.py",
+            "inference",
+            f"推論逾時，圖片={image_path}"
+        )
+        raise RuntimeError("Inference timeout") from e
 
     # 顯示結果
     count = 0

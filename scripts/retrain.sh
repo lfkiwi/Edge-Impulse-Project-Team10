@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo "[RETRAIN] Retrain script started..."
 
@@ -8,7 +9,9 @@ if [ $# -lt 1 ]; then
   exit 10
 fi
 
-DATA_DIR="$1"
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+DATA_DIR="${1:-${SCRIPT_DIR}/../data/test}"
+
 
 # 確認資料夾
 if [ ! -d "$DATA_DIR" ]; then
@@ -26,5 +29,5 @@ echo "[RETRAIN] Triggering Edge Impulse training..."
 
 sleep 1
 
-echo "[RETRAIN] Retrain completed successfully."
+echo "[RETRAIN] Simulate Retrain completed successfully."
 exit 0
