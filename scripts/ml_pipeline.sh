@@ -7,7 +7,7 @@ log_error() { echo "[ERROR] $*" >&2; }
 
 # 取得腳本所在的目錄
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
-MODEL_PATH="${1:-../models/pd_v1.eim}"  # 默認模型
+MODEL_PATH="${1:-${SCRIPT_DIR}/../models/pd_v1.eim}"  # 默認模型
 DATA_DIR="${2:-${SCRIPT_DIR}/../data/test}"  # 默認資料夾
 
 # ===== 確認模型檔案是否存在 =====
