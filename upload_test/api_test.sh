@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-if [ -z "$API_KEY" ] || [ -z "$PROJECT_ID" ]; then
-  echo "[WARN] API_KEY or PROJECT_ID not set, skip API test"
-  exit 0
-fi
-
 API_KEY="${EI_API_KEY}"
 PROJECT_ID="${EI_PROJECT_ID}"
+
+if [ -z "$API_KEY" ] || [ -z "$PROJECT_ID" ]; then
+  echo "[WARN] EI_API_KEY or EI_PROJECT_ID not set, skip API test"
+  exit 0
+fi
 
 BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
@@ -16,7 +16,13 @@ TRAIN_RESPONSE=$(curl -s -X POST \
   -H "x-api-key: $API_KEY" \
   "$BASE_URL/$PROJECT_ID/jobs/train")
 
-echo "$TRAIN_RESPONSE" | jq .
+echo "[DEBUG] Raw response:"
+echo "$TRAIN_RESPONSE"
+
+if ! echo "$TRAIN_RESPONSE" | jq . >/dev/null 2>&1; then
+  echo "[ERROR] API response is not valid JSON"
+  exit 3
+fi
 
 SUCCESS=$(echo "$TRAIN_RESPONSE" | jq -r '.success')
 
