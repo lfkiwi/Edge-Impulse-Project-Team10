@@ -9,12 +9,13 @@ if [ -z "$API_KEY" ] || [ -z "$PROJECT_ID" ]; then
   exit 0
 fi
 
-BASE_URL="https://studio.edgeimpulse.com/v1/api"
+BASE_URL="https://api.edgeimpulse.com/v1"
+PROJECT_PATH="$BASE_URL/projects/$PROJECT_ID"
 
 echo "[INFO] Test: Training API"
 TRAIN_RESPONSE=$(curl -s -X POST \
   -H "x-api-key: $API_KEY" \
-  "$BASE_URL/$PROJECT_ID/jobs/train")
+  "$PROJECT_PATH/jobs/train")
 
 echo "[DEBUG] Raw response:"
 echo "$TRAIN_RESPONSE"
@@ -36,7 +37,7 @@ echo "[INFO] Training API OK"
 echo "[INFO] Test: Download model API"
 curl -s -L \
   -H "x-api-key: $API_KEY" \
-  "$BASE_URL/$PROJECT_ID/deployment/download?type=linux" \
+  "$PROJECT_PATH/deployment/download?type=linux" \
   -o test_model.eim
 
 if [ ! -f test_model.eim ]; then
