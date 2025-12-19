@@ -20,3 +20,5 @@ BASE_URL="https://studio.edgeimpulse.com/v1/api"
 echo "[INFO] Test: Get Project Info API"
 echo "[DEBUG] Project ID: ${PROJECT_ID}"
 echo "[DEBUG] API Key: ${API_KEY:0:10}..."
+
+exit 0
