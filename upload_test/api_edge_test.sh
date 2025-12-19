@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-
+API_KEY="${EI_API_KEY}"
 PROJECT_ID="${EI_PROJECT_ID}"
 BASE_URL="https://api.edgeimpulse.com/v1/projects/$PROJECT_ID"
 
 echo "[INFO] Test: Get Project Info API"
 
 RESP=$(curl -s \
-  -H "x-api-key: $API \
+  -H "x-api-key: $API_KEY \
   "$BASE_URL/$PROJECT_ID")
 
 echo "[DEBUG] Raw response:"
