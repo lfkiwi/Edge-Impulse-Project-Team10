@@ -6,6 +6,8 @@ echo "[DEBUG] EI_API_KEY length: ${#API_KEY}"
 API_KEY="${EI_API_KEY}"
 PROJECT_ID="${EI_PROJECT_ID}"
 
+echo "[DEBUG] EI_API_KEY length: ${#API_KEY}"
+
 BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
 echo "[INFO] Test: Get Project Info API"
