@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+echo "[DEBUG] EI_API_KEY length: ${#API_KEY}"
+echo "[DEBUG] EI_PROJECT_ID: $PROJECT_ID"
+
 API_KEY="${EI_API_KEY}"
 PROJECT_ID="${EI_PROJECT_ID}"
 
