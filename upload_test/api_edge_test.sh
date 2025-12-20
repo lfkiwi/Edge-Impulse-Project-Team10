@@ -8,7 +8,7 @@ BASE_URL="https://studio.edgeimpulse.com/v1/api"
 echo "[INFO] Test: Get Project Info API"
 
 RESP=$(curl -s \
-  -H "x-api-key: $API_KEY \
+  -H "x-api-key: $API_KEY" \
   "$BASE_URL/$PROJECT_ID")
 
 echo "[DEBUG] Raw response:"
