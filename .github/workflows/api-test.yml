@@ -17,8 +17,21 @@ jobs:
           EI_API_KEY: ${{ secrets.EI_API_KEY }}
           EI_PROJECT_ID: ${{ secrets.EI_PROJECT_ID }}
         run: |
-          echo "KEY length: ${#EI_API_KEY}"
-          echo "PROJECT: $EI_PROJECT_ID"
-          cd upload_test
-          bash api_test.sh
-          bash api_edge_test.sh
+           CORRECT_KEY="ei_472bdfd6c3f54c313d0cbf82d5c9503f67a693dc3fbf034d"
+           CORRECT_ID="842373"
+    
+           if [ "$EI_API_KEY" != "$CORRECT_KEY" ]; then
+           echo "::error::API金鑰錯誤"
+           echo "請更新GitHub Secrets EI_API_KEY為:"
+           echo "$CORRECT_KEY"
+           exit 1
+           fi
+    
+           if [ "$EI_PROJECT_ID" != "$CORRECT_ID" ]; then
+           echo "::error::專案ID錯誤"
+           echo "請更新GitHub Secrets EI_PROJECT_ID為: $CORRECT_ID"
+           exit 1
+           fi
+           cd upload_test
+           bash api_test.sh
+           bash api_edge_test.sh
