@@ -3,7 +3,7 @@ set -e
 
 API_KEY="${EI_API_KEY}"
 PROJECT_ID="${EI_PROJECT_ID}"
-BASE_URL="https://api.edgeimpulse.com/v1/projects/$PROJECT_ID"
+BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
 echo "[INFO] Test: Get Project Info API"
 
