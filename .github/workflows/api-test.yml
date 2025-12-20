@@ -1,6 +1,6 @@
 name: API Test
 
-on: push
+on: [push, pull_request]
 
 jobs:
   api-test:
@@ -13,6 +13,9 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Run API Test
+       env:
+          EI_API_KEY: ${{ secrets.EI_API_KEY }}
+          EI_PROJECT_ID: ${{ secrets.EI_PROJECT_ID }}
         run: |
           export EI_API_KEY="${{ secrets.EI_API_KEY }}"
           export EI_PROJECT_ID="${{ secrets.EI_PROJECT_ID }}"
