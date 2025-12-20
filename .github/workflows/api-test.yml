@@ -17,8 +17,8 @@ jobs:
           EI_API_KEY: ${{ secrets.EI_API_KEY }}
           EI_PROJECT_ID: ${{ secrets.EI_PROJECT_ID }}
         run: |
-          echo "KEY length: ${#EI_API_KEY}"
-          echo "PROJECT: $EI_PROJECT_ID"
+          export EI_API_KEY="${{ secrets.EI_API_KEY }}"
+          export EI_PROJECT_ID="${{ secrets.EI_PROJECT_ID }}"
           cd upload_test
           bash api_test.sh
           bash api_edge_test.sh
