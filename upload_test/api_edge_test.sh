@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-API_KEY="${EI_API_KEY}"
-PROJECT_ID="${EI_PROJECT_ID}"
+API_KEY="ei_472bdfd6c3f54c313d0cbf82d5c9503f67a693dc3fbf034d"
+PROJECT_ID="842373"
+
 BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
 echo "[INFO] Test: Get Project Info API"
