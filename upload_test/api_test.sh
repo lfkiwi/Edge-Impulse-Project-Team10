@@ -1,14 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "[DEBUG] EI_API_KEY length: ${#API_KEY}"
+# API_KEY="${EI_API_KEY}"
+# PROJECT_ID="${EI_PROJECT_ID}"
 
-API_KEY="${EI_API_KEY}"
-PROJECT_ID="${EI_PROJECT_ID}"
-
-echo "[DEBUG] EI_API_KEY length: '$API_KEY'"
-echo "[DEBUG] PROJECT_ID: '$PROJECT_ID'"
-echo "[DEBUG] PROJECT_ID length: ${#PROJECT_ID}"
+API_KEY="ei_472bdfd6c3f54c313d0cbf82d5c9503f67a693dc3fbf034d"
+PROJECT_ID="842373"
 
 BASE_URL="https://studio.edgeimpulse.com/v1/api"
 
