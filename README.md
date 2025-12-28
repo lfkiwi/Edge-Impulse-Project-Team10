@@ -13,10 +13,18 @@ Python 執行套件
 pip3 install opencv-python numpy edge_impulse_linux
 ```
 ## 使用
+1. 在專案根目錄建立 models 資料夾
+   ```bash
+   mkdir -p models
+   ```
+2. 下載圖片模組訓練.eim檔
+[Edge Impulse](https://studio.edgeimpulse.com/studio/842373 "游標顯示")
+
+點選clone project --> 複製完之後點選左邊Deployment --> 搜尋欄尋找linux(x86) --> 點選build --> 獲得.eim檔
 
 將你從Edge Impulse下載下來的模型檔案（.eim 檔）。改名成 pd_v1.eim
 
-只要按照這三個步驟，就可以實現「丟圖片進去 -> 跑出結果」的循環。
+只要按照這三個步驟，就可以實現「丟圖片進去 --> 跑出結果」的循環。
 
 請打開終端機，確認已經進入你的專案資料夾，並且啟動了虛擬環境 (source venv/bin/activate)。
 
