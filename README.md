@@ -13,6 +13,9 @@ Python 執行套件
 pip3 install opencv-python numpy edge_impulse_linux
 ```
 ## 使用
+
+將你從Edge Impulse下載下來的模型檔案（.eim 檔）。改名成 pd_v1.eim
+
 只要按照這三個步驟，就可以實現「丟圖片進去 -> 跑出結果」的循環。
 
 請打開終端機，確認已經進入你的專案資料夾，並且啟動了虛擬環境 (source venv/bin/activate)。
@@ -25,7 +28,7 @@ pip3 install opencv-python numpy edge_impulse_linux
 2. **執行**
 在終端機輸入這行指令
 ```bash
-./scripts/run_inference_v2.sh
+./scripts/ml_pipeline.sh
 ```
 3. **收結果** 
 執行完畢後，會看到終端機顯示： [INFO] 批次推論完成，結果都在 results/2025xxxx_xxxxxx
