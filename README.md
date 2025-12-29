@@ -40,6 +40,13 @@ pip3 install opencv-python numpy edge_impulse_linux
 執行完畢後，會看到終端機顯示： [INFO] 批次推論完成，結果都在 results/2025xxxx_xxxxxx
 打開results資料夾，會看到一個「最新時間」的資料夾
 點進去，那就是這一次執行的成果。
+
+## 系統需求
+-Linux OS (推薦使用Ubuntu)
+-Python 3.x
+edge_impulse_linux >= 1.0.7
+opencv-python >= 4.5.1.48
+numpy >= 1.21.0
 ## 預覽
 results資料夾
 點進去，會看到裡面的照片都已經被AI畫上紅色的框框和分數。
